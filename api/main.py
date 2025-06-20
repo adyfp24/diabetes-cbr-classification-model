@@ -43,12 +43,15 @@ def predict():
 
         # Prediksi
         pred = model.predict(input_scaled)[0]
+        proba = model.predict_proba(input_scaled)[0]
+        confidence = float(np.max(proba))  
         result = "Diabetes" if pred == 1 else "Tidak Diabetes"
 
         return jsonify({
             "success": True,
             "prediction": int(pred),
-            "result": result
+            "result": result,
+            "confidence": round(confidence, 4)
         })
 
     except Exception as e:
